@@ -9,7 +9,7 @@ export class EmployeesController {
     constructor(private readonly employeesService: EmployeesService) { }
 
     @Get('/')
-    async getAllMovies() {        
+    async getAllEmployees() {
         return await this.employeesService.findAll();
     }
 
@@ -20,26 +20,24 @@ export class EmployeesController {
 
     @Delete('/:id')
     async deleteEmployee(@Param('id') employeeId: number) {
-        return await this.employeesService.remove(employeeId);
+        return await this.employeesService.removeEmployee(employeeId);
     }
 
     @Post()
-    async createBook(@Res() response, @Body() employee: Employee) {
-        const newEmployee = await this.employeesService.createBook(employee);
+    async createEmployee(@Res() response, @Body() employee: Employee) {
+        const newEmployee = await this.employeesService.createEmployee(employee);
         return response.status(200).json({
             newEmployee
         })
     }
 
-    // @Post('/')
-    // requestAccountCreation(@Body() movie: MovieCreationDto) {
-    //     return this.employeesService.addMovie(movie);
-    // }
+    @Put(':id')
+    async update(@Param('id') id: number, @Body() updatedEmployee: any) {
+        const newEmployee: Employee = await this.employeesService.updateEmployee(id, updatedEmployee)
+        return newEmployee;
+    }
 
-    // @Put('/:id')
-    // updateMovie(@Param('id') movieId: number, @Body() updatedMovie: MovieEditDto) {
-    //     return this.employeesService.editMovie(movieId, updatedMovie);
-    // }
-
+    // endpoints for currency conversion
+    
 
 }

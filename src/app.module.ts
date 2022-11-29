@@ -19,11 +19,11 @@ import { DataSource } from 'typeorm';
       entities: [Employee],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Employee])
+    TypeOrmModule.forFeature([Employee]),
   ],
   controllers: [AppController, EmployeesController],
   providers: [AppService, EmployeesService],
 })
-export class AppModule { 
-  constructor(private dataSource: DataSource) {}
+export class AppModule {
+  constructor(private dataSource: DataSource) { }
 }

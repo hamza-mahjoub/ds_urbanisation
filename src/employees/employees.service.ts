@@ -17,11 +17,22 @@ export class EmployeesService {
         return this.employeesRepository.findOneBy({ id });
     }
 
-    async remove(id: number): Promise<void> {
+    async removeEmployee(id: number): Promise<void> {
         await this.employeesRepository.delete(id);
     }
 
-    createBook(employee: Employee): Promise<Employee> {
+    createEmployee(employee: Employee): Promise<Employee> {
         return this.employeesRepository.save(employee);
+    }
+
+    updateEmployee(id: number, data: any): Promise<any> {
+        return this.employeesRepository
+            .createQueryBuilder()
+            .update()
+            .set({
+                ...data
+            })
+            .where('id = :id', { id })
+            .execute()
     }
 }

@@ -11,6 +11,7 @@ export class Employee {
   @Column()
   lastName: string;
 
-  @Column({ default: true })
-  isActive: boolean;
+  @Column()
+  salary: number;
+
 }
