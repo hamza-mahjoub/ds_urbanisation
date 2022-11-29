@@ -1,0 +1,60 @@
+#%RAML 1.0
+
+resourceTypes:
+  Collection:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<item>>[]
+    post:
+      body:
+        application/json:
+          type: <<item>>
+  Member:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<item>>
+    delete:
+      responses:
+        204:
+    put:
+      body:
+        application/json:
+          type: <<item>>
+  Currency:
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                properties:
+                  salary: string
+          
+title: ds-urbanisation
+version: v1
+baseUri: http://localhost:3000
+
+types:
+  Employee:
+    properties:
+      firstName: string
+      lastName: string
+      salary: number
+    example:
+      firstName: flen
+      lastName: fouleni
+      salary: 10
+      
+/employees:
+  type: { Collection: { item: Employee } }
+  /{id}:
+    type: { Member: { item: Employee } }
+    /salary-euro:
+      type: Currency
+    /salary-dollar:
+      type: Currency
