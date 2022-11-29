@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { EmployeesController } from './employees/employees.controller';
 import { EmployeesService } from './employees/employees.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Employee } from './employees/Employee.entity';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
@@ -14,11 +16,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'root',
       password: 'dbadmin.123',
       database: 'ds_urbanisation',
-      entities: [],
+      entities: [Employee],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([Employee])
   ],
   controllers: [AppController, EmployeesController],
   providers: [AppService, EmployeesService],
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(private dataSource: DataSource) {}
+}

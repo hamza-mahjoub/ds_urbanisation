@@ -1,48 +1,27 @@
 import { Injectable } from '@nestjs/common';
-
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Employee } from './Employee.entity';
 @Injectable()
 export class EmployeesService {
+    constructor(
+        @InjectRepository(Employee)
+        private employeesRepository: Repository<Employee>,
+    ) { }
 
-    index = 3;
-    movies: Movie[] = [
-        {
-            id: 1,
-            name: 'mission impossible',
-            type: 'action',
-            rating: 10,
-        },
-        {
-            id: 2,
-            name: 'Jumanji',
-            type: 'adventure',
-            rating: 9,
-        },
-    ];
-
-    addMovie(movie): Movie[] {
-        this.movies = this.movies.concat({ id: this.index, ...movie });
-        this.index = this.index++;
-        return this.movies;
+    findAll(): Promise<Employee[]> {
+        return this.employeesRepository.find();
     }
 
-    getAllMovies(): Movie[] {
-        return this.movies;
+    findOne(id: number): Promise<Employee> {
+        return this.employeesRepository.findOneBy({ id });
     }
 
-    getMovieById(id: number): Movie {
-        return this.movies.filter((m) => m.id == id)[0];
+    async remove(id: number): Promise<void> {
+        await this.employeesRepository.delete(id);
     }
 
-    editMovie(id: number, newMovie): Movie[] {
-        this.movies = this.movies.map((m) =>
-            m.id == id ? { ...this.getMovieById(id), ...newMovie } : m,
-        );
-        return this.movies;
+    createBook(employee: Employee): Promise<Employee> {
+        return this.employeesRepository.save(employee);
     }
-
-    deleteMovie(id) {
-        this.movies = this.movies.filter((m) => m.id != id);
-        return id;
-    }
-
 }
