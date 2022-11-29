@@ -35,4 +35,14 @@ export class EmployeesService {
             .where('id = :id', { id })
             .execute()
     }
+
+    async getSalaryInEuro(id: number): Promise<any> {
+        const employee = await this.findOne(id);
+        return { salary: `${employee.salary * 0.3} €` };
+    }
+
+    async getSalaryInDollar(id: number): Promise<any> {
+        const employee = await this.findOne(id);
+        return { salary: `${employee.salary * 0.31} $` };
+    }
 }

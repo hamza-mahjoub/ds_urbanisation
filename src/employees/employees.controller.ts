@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Res, Query } from '@nestjs/common';
 import { Employee } from './Employee.entity';
 import { EmployeesService } from './employees.service';
 
@@ -38,6 +38,14 @@ export class EmployeesController {
     }
 
     // endpoints for currency conversion
-    
 
+    @Get('/:id/salary-euro')
+    async getSalaryInEuro(@Param('id') id: number) {
+        return await this.employeesService.getSalaryInEuro(id);
+    }
+
+    @Get('/:id/salary-dollar')
+    async getSalaryInDollar(@Param('id') id: number) {
+        return await this.employeesService.getSalaryInDollar(id);
+    }
 }
